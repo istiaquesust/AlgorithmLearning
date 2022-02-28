@@ -1,3 +1,5 @@
+/* Java code - Find maximum sum from contiguous sub-array. this code only print sum - will midify of left-right index later.*/
+
 public class MaximumSubarray {
 	
 	static int maxLeft;
