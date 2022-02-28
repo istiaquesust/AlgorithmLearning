@@ -1,0 +1,56 @@
+public class MaximumSubarray {
+	
+	static int maxLeft;
+	static int maxRight;
+	
+	static int findMaximumSubarray(int[] a, int low, int high){	
+		
+		if(low==high) {	
+			
+			return a[low]; // base case of recursion
+		}
+		else {
+		
+			int mid = ((low + high) / 2);
+			int leftS = findMaximumSubarray(a, low, mid); 			
+			int rightS = findMaximumSubarray(a, (mid+1), high);  	
+			int crossS= findMaxCrossingSubarray(a, low, mid, high); 
+			if(leftS >= rightS && leftS >= crossS)
+				return leftS;
+			else if(rightS >= leftS && rightS >= crossS)
+				return rightS;
+			else return crossS;
+			}
+		}
+	
+	static int findMaxCrossingSubarray(int[] a, int low, int mid, int high) {
+		
+		int leftSum =  Integer.MIN_VALUE;
+		int sum = 0;
+		for(int i=mid; i>=low; i--) {
+			sum = sum + a[i];
+			if(sum > leftSum) {
+				leftSum = sum;
+				 maxLeft = i;
+			}
+		}
+		int rightSum =  Integer.MIN_VALUE;	
+			sum = 0; 
+			for(int j=(mid+1); j<=high; j++) {
+				sum = sum + a[j];
+				if(sum > rightSum) {
+					rightSum = sum;
+					maxRight = j;
+				}	
+		}
+		int crossSum = leftSum + rightSum;
+		return crossSum;
+	}
+
+	public static void main(String args[]) {
+		
+		int[] a = {-3, 2, 5, -8, -20, -6, -5, -3};
+
+		System.out.println( findMaximumSubarray(a, 0, (a.length-1)));
+	}	
+}
